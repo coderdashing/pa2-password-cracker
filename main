@@ -1,0 +1,93 @@
+int string_cap_match(char *s1, char *s2)
+{
+        // Your code here
+    int i = 0;
+    int oneChance = 0;
+    while(s1[i] != 0 || s2[i] != 0){
+        if(s2[i] == 0){
+            return 0;
+        }
+        if(s1[i] == 0){
+            return 0;
+        }
+        if(s1[i] != s2[i]){
+           if(oneChance == 1){
+               return 0;
+           }
+        
+            if(s1[i] >= 'a' && s1[i] <= 'z'){
+                if(s2[i] < 'A' || s2[i] > 'Z'){
+                    return 0;
+                }
+                oneChance = 1;
+            }
+            else if(s2[i] >= 'a' && s2[i] <= 'z'){
+                if(s1[i] < 'A' || s1[i] > 'Z'){
+                    return 0;
+                }
+                oneChance = 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        i++;
+        
+    }
+        return 1; // placeholder
+}
+
+int main()
+{
+        // TODO: Read lines from stdin in a loop
+        // Each line contains two strings separated by a space
+        // Parse the two strings from each line
+        // Call string_cap_match and print "match" or "miss"
+        char buffer[201];
+    char r1[100];
+    char r2[100];
+    int i1;
+    int i2;
+    int mainind;
+    int ind2;
+    while (1)
+    {
+        mainind = 0;
+        char *scan1 = fgets(buffer,sizeof(buffer),stdin);
+        if(scan1 == NULL){
+            break;
+        }
+        for(int i = 0; i < 100; i++){
+            r1[i] = ' ';
+            r2[i] = ' ';
+        }
+        i1 = 0;
+        while(scan1[mainind] != '\0' && scan1[mainind] != ' '){
+            if(scan1[mainind] != '\n'){
+                r1[i1] = scan1[mainind];
+                i1++;
+            }
+            mainind++;
+        }
+        if(scan1[mainind] == '\0' || mainind > 100){
+            break;
+        }
+        mainind++;
+        i2 = 0;
+        ind2 = 0;
+        while(scan1[mainind+ind2] != '\0'){
+            if(scan1[mainind+ind2] != '\n'){
+                r2[i2] = scan1[mainind+ind2];
+                i2++;
+            }
+            ind2++;
+        }
+        if(ind2 > 100){
+            break;
+        }
+
+        r1[i1] = '\0';
+        r2[i2] = '\0';
+    }
+      return 0;
+}

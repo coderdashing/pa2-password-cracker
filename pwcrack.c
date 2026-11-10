@@ -134,6 +134,9 @@ int main(int argc, char* argv[])
 				old = scan1[i];
 				scan1[i] = '0';
 				while(scan1[i] <= '9'){
+					if(scan1[i] == old){
+						continue;
+					}
 					SHA256(scan1,size,hash);
 					for (int i = 0; i < 32; i++){
 	            		sprintf(&hex_hash[i * 2], "%02x", hash[i]);

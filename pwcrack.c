@@ -61,6 +61,7 @@ int main(int argc, char* argv[])
 	char final_hash[65];
 	final_hash[65] = '\0';
 	int size;
+	char old;
 	char *scan1;
     while (1)
     {
@@ -130,38 +131,26 @@ int main(int argc, char* argv[])
 				scan1[i] -= 32;
  	    	}
 			else if (scan1[i] >= '0'&& scan1[i] <= '9'){
-				scan1[i] += 1;
-				SHA256(scan1,size,hash);
-				for (int i = 0; i < 32; i++){
-	            	sprintf(&hex_hash[i * 2], "%02x", hash[i]);
-				}
-				hex_hash[65] = '\0';
-				if(string_cap_match(hex_hash,argv[1])){
-					for (int i = 0; i < size; i++){
-						first_string[i] = scan1[i];
+				old = scan1[i];
+				scan1[i] = '0';
+				while(scan1[i] <= '9'){
+					SHA256(scan1,size,hash);
+					for (int i = 0; i < 32; i++){
+	            		sprintf(&hex_hash[i * 2], "%02x", hash[i]);
 					}
-					first_string[size] = '\0';
-					for(int i = 0; i < 65; i++){
-						final_hash[i] = hex_hash[i];
+					hex_hash[65] = '\0';
+					if(string_cap_match(hex_hash,argv[1])){
+						for (int i = 0; i < size; i++){
+							first_string[i] = scan1[i];
+						}
+						first_string[size] = '\0';
+						for(int i = 0; i < 65; i++){
+							final_hash[i] = hex_hash[i];
+						}
 					}
+					scan1[i]++;
 				}
-				scan1[i] -= 2;
-
-				SHA256(scan1,size,hash);
-				for (int i = 0; i < 32; i++){
-	            	sprintf(&hex_hash[i * 2], "%02x", hash[i]);
-				}
-				hex_hash[65] = '\0';
-				if(string_cap_match(hex_hash,argv[1])){
-					for (int i = 0; i < size; i++){
-						first_string[i] = scan1[i];
-					}
-					first_string[size] = '\0';
-					for(int i = 0; i < 65; i++){
-						final_hash[i] = hex_hash[i];
-					}
-				}
-				scan1[i] += 1;
+				scan1[i] = old;
 			}
 		
 		}
